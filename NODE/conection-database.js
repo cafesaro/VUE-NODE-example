@@ -13,19 +13,22 @@ database.connect()
 .then(Client => console.log('database conncected'))
 .catch(error => console.error(error));
 
-const query1 = database.query('select * from application');
+var query1 = database.query('select * from application');
 const query2 = database.query('select * from review');
-const queryresult1 = Promise.all([query1]);
 
 Promise.all([query1,query2]).then
 (results => {
 
-    const queryresult1 = results[0].rows;
+    query1 = results[0].rows;
     const queryresult2 = results[1].rows;
 
+    console.log(query1);
 
-}). catch(error => console.error(error));
-console.log(queryresult1);
+
+
+}). catch(error => console.error(error)); 
+
+console.log(query1.rows);
 
 
 const express = require('express');
@@ -40,7 +43,7 @@ app.set('json spaces', 2);
 
 //routes 
 app.get('/job-application', (req, res) => {
-    res.send(queryresult1);
+    res.send(query1);
 })
 
 //starting the server 
