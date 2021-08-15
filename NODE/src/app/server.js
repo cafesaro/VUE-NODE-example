@@ -5,7 +5,6 @@ import morgan from 'morgan';
 import { logger } from '../utils/logger';
 import { env } from '../utils/enviroment';
 import routerIndex from '../routes/index.routes';
-import moduleService from "../modules/module/services/module.service";
 
 // SETTINGS
 const app = express();

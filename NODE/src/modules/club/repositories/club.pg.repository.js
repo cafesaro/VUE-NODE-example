@@ -6,7 +6,7 @@ const context = "Module PG Repository";
 
 clubPGRepository.getData = async () => {
     logger.info(`[${context}]: Obtaning info from pg`);
-    const resp = await pool.query("select * from fut_tut.v_lnk_club_info");
+    const resp = await pool.query("select * from fut_tut.lnk_club");
     return resp.rows;
 }
 

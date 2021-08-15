@@ -1,8 +1,8 @@
 import { logger } from "../../../utils/logger";
-import clubService from "../services/module.service";
+import clubService from "../services/club.service";
 
 const clubController = {};
-const context = "Module Controller";
+const context = "Club Controller";
 
 clubController.get = async (req, res, next) => {
     try {

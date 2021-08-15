@@ -1,7 +1,7 @@
 import Router from "express-promise-router";
-import clubController from "./controllers/module.controller";
+import clubController from "./controllers/club.controller";
 const clubRouter = Router();
 
-clubRouter.get('/', moduleController.get);
+clubRouter.get('/', clubController.get);
 
 export default clubRouter;
