@@ -4,9 +4,9 @@ import clubPGRepository from "../repositories/club.pg.repository";
 const clubService = {};
 const context = "Module Service";
 
-clubService.getInfo = async () => {
+clubService.getClubs = async () => {
     logger.info(`[${context}]: Consulting the data sources`);
-    const info = await clubPGRepository.getData();
+    const info = await clubPGRepository.getClubs();
     return info;
 };
 

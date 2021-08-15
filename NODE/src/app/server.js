@@ -25,7 +25,7 @@ app.use(helmet());
 app.get('/', async (req, res) => {
     res.status(200).send("Server running");
 });
-app.use('/cg', routerIndex);
+app.use('/fut-tut', routerIndex);
 
 
 // ERROR HANDLER

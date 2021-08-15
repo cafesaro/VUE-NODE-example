@@ -7,7 +7,7 @@ const context = "Club Controller";
 clubController.get = async (req, res, next) => {
     try {
         logger.info(`[${context}]: Getting info`);
-        const resp = await clubService.getInfo();
+        const resp = await clubService.getClubs();
         res.status(200).send(resp);
     } catch (error) {
         next(error);

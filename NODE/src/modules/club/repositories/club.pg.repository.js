@@ -1,12 +1,14 @@
 import pool from "../../../db/pg.connection";
 import { logger } from "../../../utils/logger";
+import PGQuery from "../../../utils/pg.queries";
 
 const clubPGRepository = {};
-const context = "Module PG Repository";
+const context = "Club PG Repository";
 
-clubPGRepository.getData = async () => {
-    logger.info(`[${context}]: Obtaning info from pg`);
-    const resp = await pool.query("select * from fut_tut.lnk_club");
+clubPGRepository.getClubs = async () => {
+    logger.info(`[${context}]: Obtaning clubs from pg`);
+    await pool.query(PGQuery.setSchema());
+    const resp = await pool.query(PGQuery.getPlants());
     return resp.rows;
 }
 
