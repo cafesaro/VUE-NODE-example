@@ -113,6 +113,6 @@ begin
 end;
 $$;
 
-select fut_tut.sp_lnk_club_get();
+select * from fut_tut.sp_lnk_club_get();
 select fut_tut.sp_lnk_club_insert('Caracas Furbol club'::varchar, 100, 'Gabo'::varchar, 'Venezuela'::varchar);
 select fut_tut.sp_lnk_player_insert('Diego Maradona'::varchar, 1000000, 2, 'CRA'::varchar , 'Brazil'::varchar);
