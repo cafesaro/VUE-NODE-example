@@ -11,7 +11,7 @@ PGQuery.setSchema = () => {
 PGQuery.getClubs = () => {
   return {
     text: `
-    select fut_tut.sp_lnk_club_get();
+    select * from sp_lnk_club_get();
         `,
   };
 };
@@ -19,7 +19,7 @@ PGQuery.getClubs = () => {
 PGQuery.insertClub = (name, bugdet, coach, country) => {
   return {
       text: `
-      select fut_tut.sp_lnk_club_insert($1::varchar,$2,$3::varchar,$4::varchar);
+      select * from sp_lnk_club_insert($1::varchar,$2,$3::varchar,$4::varchar);
       `,
       values: [name, bugdet, coach, country]
   }
@@ -28,7 +28,7 @@ PGQuery.insertClub = (name, bugdet, coach, country) => {
 PGQuery.insertPlayer= (name, value, idClub, position, country) => {
   return {
       text: `
-      select fut_tut.sp_lnk_player_insert($1::varchar,$2,$3,$4::varchar,$5::varchar);
+      select * from sp_lnk_player_insert($1::varchar,$2,$3,$4::varchar,$5::varchar);
       `,
       values: [name, value, idClub, position, country]
   }
@@ -37,7 +37,7 @@ PGQuery.insertPlayer= (name, value, idClub, position, country) => {
 PGQuery.getPlayers = () => {
   return {
     text: `
-    select * from fut_tut.v_lnk_player_info;
+    select * from sp_lnk_player_get();
         `,
   };
 };
