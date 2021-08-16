@@ -10,6 +10,9 @@ import routerIndex from '../routes/index.routes';
 const app = express();
 app.set('port', env.PORT || 3000);
 
+//config
+app.set('json spaces', 2);
+
 // MIDDLEWARES
 app.use(morgan("dev", { "stream": logger.stream }));
 app.use(json());
