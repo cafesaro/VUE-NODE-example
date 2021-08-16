@@ -21,11 +21,18 @@ values
 insert into fut_tut.lnk_club
     (name_club, name_coach, status, bugdet, id_country)
 values
-    ('Real Madrid', 'Carlos Pirelli Sánchez', true, 100000, 1),
-    ('PSG', 'Sofia Armando Rodriguez', true, 1000000, 2);
+    ('Real Madrid', 'Carlo Ancelotti', true, 200000000, 1),
+    ('PSG', 'Maurico Pochettino', true, 400000000, 2),
+    ('Manchester United', 'Ole Gunnar Solskjaer', true, 185000000, 5),
+    ('Borussia Dortmund', 'Marco Rose', true, 120000000, 6),
+    ('Juventus de Turín', 'Massimiliano Allegri', true, 135000000, 7);
 
 insert into fut_tut.lnk_player
     (name_player, value_player, status, id_country, id_position)
 values
-    ('Cesar Guzman', 10 , true, 1, 3),
-    ('Gabriel tagliafico', 11 , true, 1, 3);
+    ('Karim Benzema', 25000000 , true, 2, 4),
+    ('Sergio Ramos', 10000000 , true, 1, 2),
+    ('Raphaël Varane', 70000000 , true, 2, 2),
+    ('Jude Bellingham', 55000000 , true, 5, 3),
+    ('Cristiano Ronaldo', 45000000 , true, 3, 4);
+    
