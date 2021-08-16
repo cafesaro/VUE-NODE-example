@@ -10,4 +10,9 @@ clubService.getClubs = async () => {
     return info;
 };
 
+clubService.insertClub = async (name, bugdet, coach, country) => {
+    logger.debug(`[${context}]: Inserting country in the db`);
+    await clubPGRepository.insertClub(name, bugdet, coach, country);
+};
+
 export default clubService;

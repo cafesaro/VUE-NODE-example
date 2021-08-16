@@ -5,4 +5,7 @@ const clubRouter = Router();
 // GET
 clubRouter.get('/', clubController.get);
 
+// POST
+clubRouter.post('/', clubController.insertClub);
+
 export default clubRouter;
