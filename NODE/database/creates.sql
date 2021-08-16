@@ -20,6 +20,7 @@ create table fut_tut.ms_player_position (
 
 create table fut_tut.lnk_club (
     id_club                  bigserial,
+    uuid_club                uuid            default public.uuid_generate_v4(),
     name_club                varchar(30)     not null,
     name_coach               varchar(30)     not null,
     status                   boolean         not null not null default true,
@@ -28,7 +29,8 @@ create table fut_tut.lnk_club (
     modification_date        timestamptz     not null default now(),
     id_country               int             not null
         references fut_tut.ms_country (id_country),
-    primary key (id_club)
+    primary key (id_club, uuid_club),
+    unique (id_club)
 );
 
 create table fut_tut.lnk_player (
@@ -45,8 +47,9 @@ create table fut_tut.lnk_player (
     id_position              int             not null
         references fut_tut.ms_player_position (id_position),
     primary key (id_player, uuid_player),
-	id_club                  bigserial
-		references fut_tut.lnk_club (id_club)
+	id_club                  bigserial,
+    uuid_club                uuid            default public.uuid_generate_v4(),
+	foreign key (id_club, uuid_club) references fut_tut.lnk_club (id_club, uuid_club)
 );
 
 --Views
