@@ -8,4 +8,8 @@ playerRouter.get('/', playerController.get);
 // POST
 playerRouter.post('/', playerController.insertPlayer);
 
+// PUT
+playerRouter.put('/:idPlayer/toteam/:idClub', playerController.changePlayer);
+playerRouter.put('/:idPlayer/noteam', playerController.deleteTeam);
+
 export default playerRouter;

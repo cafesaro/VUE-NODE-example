@@ -10,6 +10,9 @@ language plpgsql
 as $$
 declare
     v_id_country              int;
+    v_id_club                 int;
+    v_json_resp               json;
+
 begin
     select id_country into v_id_country
     from fut_tut.ms_country
@@ -24,7 +27,18 @@ begin
     insert into fut_tut.lnk_club
         (name_club, bugdet, name_coach, id_country)
     values
-        (c_name, c_bugdet, c_name_coach, v_id_country);
+        (c_name, c_bugdet, c_name_coach, v_id_country)
+    returning  id_club into v_id_club;
+
+        v_json_resp := json_build_object(
+        'idClub', v_id_club,
+        'name', c_name,
+        'coach', c_name_coach,
+        'country', c_name_country,
+        'bugdet', c_bugdet
+    );
+    perform pg_notify('club_verify', v_json_resp::text);
+    return;
 end;
 $$;
 
@@ -89,11 +103,131 @@ begin
         'position', p_name_position,
         'club', v_name_club
     );
+    perform pg_notify('player_verify', v_json_resp::text);
+    return;
+end;
+$$;
+
+
+
+create or replace function fut_tut.sp_lnk_player_changeteam(
+    c_id_club                int,
+    p_id_player               int
+)
+returns void
+language plpgsql
+as $$
+declare
+    v_json_resp               json;
+    v_id_player               int;
+    v_id_club                 int;
+    v_id_country              int;
+    v_id_position             int;
+    v_name_player             varchar(20);
+    v_name_country            varchar(20);
+    v_name_position           varchar(20);
+    v_name_club               varchar(20);
+    v_value_player            int;
+
+begin
+    select value_player, id_player, name_player, id_club, id_position, id_country
+    into v_value_player, v_id_player, v_name_player, v_id_club, v_id_position, v_id_country
+    from fut_tut.lnk_player
+    where id_player = p_id_player;
+
+    select name_country
+    into v_name_country
+    from fut_tut.ms_country
+    where id_country = v_id_country;
+
+    select name_position
+    into v_name_position
+    from fut_tut.ms_player_position
+    where id_position = v_id_position;
+
+    select name_club
+    into v_name_club
+    from fut_tut.lnk_club
+    where id_club =c;
+
+    if (v_id_club > 0) then
+    update fut_tut.lnk_club
+    set bugdet = bugdet + v_value_player
+    where id_club = v_id_club;
+    end if;
+
+    update fut_tut.lnk_club
+    set bugdet = bugdet - v_value_player
+    where id_club = c_id_club;
+
+    update fut_tut.lnk_player
+    set id_club = c_id_club
+    where id_player = p_id_player;
+
+        v_json_resp := json_build_object(
+        'idPlayer', v_id_player,
+        'name', v_name_player,
+        'value', v_value_player,
+        'country', v_name_country,
+        'position', v_name_position,
+        'club', v_name_club
+    );
     perform pg_notify('club_verify', v_json_resp::text);
     return;
 end;
 $$;
 
+create or replace function fut_tut.sp_lnk_player_deleateteam(
+    p_id_player               int
+)
+returns void
+language plpgsql
+as $$
+declare
+    v_json_resp               json;
+    v_id_player               int;
+    v_id_club                 int;
+    v_id_country              int;
+    v_id_position             int;
+    v_name_player             varchar(20);
+    v_name_country            varchar(20);
+    v_name_position           varchar(20);
+    v_name_club               varchar(20);
+    v_value_player            int;
+
+begin
+    select value_player, id_player, name_player, id_club, id_position, id_country
+    into v_value_player, v_id_player, v_name_player, v_id_club, v_id_position, v_id_country
+    from fut_tut.lnk_player
+    where id_player = p_id_player;
+
+    select name_country
+    into v_name_country
+    from fut_tut.ms_country
+    where id_country = v_id_country;
+
+    select name_position
+    into v_name_position
+    from fut_tut.ms_player_position
+    where id_position = v_id_position;
+
+
+    update fut_tut.lnk_player
+    set id_club = null
+    where id_player = p_id_player;
+
+        v_json_resp := json_build_object(
+        'idPlayer', v_id_player,
+        'name', v_name_player,
+        'value', v_value_player,
+        'country', v_name_country,
+        'position', v_name_position,
+        'club', null
+    );
+    perform pg_notify('club_verify', v_json_resp::text);
+    return;
+end;
+$$;
 
 create or replace function fut_tut.sp_lnk_club_get()
 returns table (
@@ -134,6 +268,8 @@ begin
 end;
 $$;
 
+select fut_tut.sp_lnk_player_deleateteam(1);
+select fut_tut.sp_lnk_player_changeteam(1, 1);
 select * from fut_tut.sp_lnk_club_get();
 select fut_tut.sp_lnk_club_insert('Caracas Furbol club'::varchar, 100, 'Gabo'::varchar, 'Venezuela'::varchar);
 select fut_tut.sp_lnk_player_insert('Diego Maradona'::varchar, 1000000, 2, 'CRA'::varchar , 'Brazil'::varchar);

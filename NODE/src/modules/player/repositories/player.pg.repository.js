@@ -19,4 +19,17 @@ playerPGRepository.insertPlayer= async (name, value, idClub, position, country) 
     await pool.query(PGQuery.insertPlayer(name, value, idClub, position, country));
 };
 
+
+playerPGRepository.changePlayer= async (idClub, idPlayer) => {
+    logger.debug(`[${context}]: Saving club in pg`);
+    await pool.query(PGQuery.setSchema());
+    await pool.query(PGQuery.changePlayer(idClub, idPlayer));
+};
+
+playerPGRepository.deleteTeam= async (idPlayer) => {
+    logger.debug(`[${context}]: Saving club in pg`);
+    logger.debug(PGQuery.deleteTeam(idPlayer));
+    await pool.query(PGQuery.setSchema());
+    await pool.query(PGQuery.deleteTeam(idPlayer));
+};
 export default playerPGRepository;

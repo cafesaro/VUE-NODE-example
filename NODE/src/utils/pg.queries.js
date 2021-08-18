@@ -34,6 +34,24 @@ PGQuery.insertPlayer= (name, value, idClub, position, country) => {
   }
 };
 
+PGQuery.changePlayer= (idClub, idPlayer) => {
+  return {
+      text: `
+      select * from sp_lnk_player_changeteam($1,$2);
+      `,
+      values: [idClub, idPlayer]
+  }
+};
+
+PGQuery.deleteTeam= (idPlayer) => {
+  return {
+      text: `
+      select * from sp_lnk_player_deleateteam($1);
+      `,
+      values: [idPlayer]
+  }
+};
+
 PGQuery.getPlayers = () => {
   return {
     text: `

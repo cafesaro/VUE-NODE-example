@@ -14,6 +14,29 @@ playerController.get = async (req, res, next) => {
     }
 }
 
+playerController.changePlayer = async (req, res, next) => {
+    try {
+        logger.info(`[${context}]: Getting info`);
+        const idClub = req.params.idClub;
+        const idPlayer = req.params.idPlayer;
+        const resp = await playerService.changePlayer(idClub, idPlayer);
+        res.status(200).send(resp);
+    } catch (error) {
+        next(error);
+    }
+}
+
+playerController.deleteTeam = async (req, res, next) => {
+    try {
+        logger.info(`[${context}]: Getting info`);
+        const idPlayer = req.params.idPlayer;
+        const resp = await playerService.changePlayer(idPlayer);
+        res.status(200).send(resp);
+    } catch (error) {
+        next(error);
+    }
+}
+
 playerController.insertPlayer = async (req, res, next) => {
     try {
         const name = req.body.name_player;

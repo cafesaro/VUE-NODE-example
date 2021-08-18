@@ -15,4 +15,14 @@ playerService.insertPlayer = async (name, value, idClub, position, country) => {
     await playerPGRepository.insertPlayer(name, value, idClub, position, country);
 };
 
+playerService.changePlayer = async (idClub, idPlayer) => {
+    logger.debug(`[${context}]: Inserting country in the db`);
+    await playerPGRepository.changePlayer(idClub, idPlayer);
+};
+
+playerService.deleteTeam = async (idPlayer) => {
+    logger.debug(`[${context}]: Inserting country in the db`);
+    await playerPGRepository.deleteTeam(idPlayer);
+};
+
 export default playerService;
