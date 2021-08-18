@@ -41,6 +41,10 @@ as $$
 declare
     v_id_country              int;
     v_id_position             int;
+    v_id_player               int;
+    v_name_club               varchar(30);
+    v_json_resp               json;
+
 begin
     select id_country into v_id_country
     from fut_tut.ms_country
@@ -66,10 +70,27 @@ begin
     end if;
 
 
+    select name_club into v_name_club
+    from fut_tut.lnk_club
+    where id_club = p_id_club;
+
+
     insert into fut_tut.lnk_player
         (name_player, value_player, id_position, id_country, id_club)
     values
-        (p_name, p_value, v_id_position, v_id_country, p_id_club);
+        (p_name, p_value, v_id_position, v_id_country, p_id_club)
+    returning id_player into v_id_player;
+
+        v_json_resp := json_build_object(
+        'idPlayer', v_id_player,
+        'name', p_name,
+        'value', p_value,
+        'country', p_name_country,
+        'position', p_name_position,
+        'club', v_name_club
+    );
+    perform pg_notify('club_verify', v_json_resp::text);
+    return;
 end;
 $$;
 
@@ -99,7 +120,7 @@ returns table (
     name                       varchar(30),
     value                      int,
     country                    varchar(30),
-    "position"                   varchar(30),
+    "position"                 varchar(30),
     club                       varchar(30)
 )
 language plpgsql
