@@ -65,6 +65,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import {players} from '../../../store/namespaces';
 import playersMethods from '../../../store/players/methods/players.methods';
 import {Player} from '../interfaces/players.interface';
+import { Socket } from 'vue-socket.io-extended'
 
 @Component({})
 export default class Players extends Vue {
@@ -78,6 +79,18 @@ export default class Players extends Vue {
 
     mounted(){
       this.playerAdded();        
+    }
+
+    @Socket()
+      connect(){
+    }
+
+    listenVerifications(player : Player) {
+        this.players.push(player);
+    }
+
+    created(){ 
+       this.$socket.client.on('player_verify',this.listenVerifications)
     }
 
     async playerAdded(){
