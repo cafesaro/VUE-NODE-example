@@ -56,11 +56,10 @@ create or replace view fut_tut.v_lnk_player_info as (
     select
         pl.id_player, pl.name_player, pl.value_player,
         pc.name_country, pp.name_position, cl.name_club
-    from fut_tut.lnk_player pl
+    from fut_tut.lnk_player pl, fut_tut.lnk_club cl
     inner join fut_tut.ms_country pc on pl.id_country = pc.id_country
     inner join fut_tut.ms_player_position pp on pl.id_position = pp.id_position
-	inner join fut_tut.lnk_club cl on pl.id_club = cl.id_club
-    where (pl.status = true) 
+    where (pl.status = true) and ((cl.id_club=pl.id_club) or (pl.id_club = Null))
 );
 
 create or replace view fut_tut.v_lnk_club_info as (
