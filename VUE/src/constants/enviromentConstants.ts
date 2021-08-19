@@ -3,5 +3,5 @@ export const EnvironmentConstants = {
         process.env.VUE_APP_HOST +
         ':' +
         process.env.VUE_APP_PORT +
-        process.env.BASE_API_URL
+        process.env.VUE_APP_BASE_API_URL,
 };

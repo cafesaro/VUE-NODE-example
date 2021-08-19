@@ -3,33 +3,38 @@ import { EnvironmentConstants } from "../constants/enviromentConstants";
 import { RepositoryInterface } from "@/http/interfaces/repository.interface";
 
 export abstract class AxiosRepository implements RepositoryInterface {
-    private URL: string;
+    private host = EnvironmentConstants.HOST;
 
-    protected constructor(resource: string) {
-        this.URL = EnvironmentConstants.HOST + resource;
+    public async delete(id: number, resource: string): Promise<any> {
+        return (await axios.delete(this.host + resource + '/' + id)).data;
     }
 
-    public async delete(id: number): Promise<any> {
-        return (await axios.delete(this.URL + '/' + id)).data;
+    public async deleteAll(data: {}, resource: string): Promise<any> {
+        return (await axios.delete(this.host + resource, { data })).data;
     }
 
-    public async deleteAll(data: {}): Promise<any> {
-        return (await axios.delete(this.URL, { data })).data;
+    public async get(id: number | string, resource: string): Promise<any> {
+        return (await axios.get(this.host + resource + '/' + id)).data;
     }
 
-    public async get(id: number): Promise<any> {
-        return (await axios.get(this.URL + '/' + id)).data;
+    public async getAll(resource: string): Promise<any> {
+        return (await axios.get(this.host + '/'+ resource)).data;
+
     }
 
-    public async getAll(): Promise<any> {
-        return (await axios.get(this.URL)).data;
+    async post(data: {}, resource: string): Promise<any> {
+        return (await axios.post(this.host + '/'+resource, data)).data;
     }
 
-    async post(data: {}): Promise<any> {
-        return (await axios.post(this.URL, data)).data;
+    async postData(data: {}, resource: string): Promise<any> {
+        return (await axios.post(this.host + resource, data,{
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+        })).data;
     }
 
-    async put(id: number, data: {}): Promise<any> {
-        return (await axios.put(this.URL + '/' + id, data)).data;
+    async put(data: {}, resource: string): Promise<any> {
+        return (await axios.put(this.host + resource + '/', data)).data;
     }
 }

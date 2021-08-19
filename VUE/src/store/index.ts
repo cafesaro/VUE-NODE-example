@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import test from '@/store/test/test'
+import clubs from '@/store/clubs/clubs'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -11,6 +12,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    test
+    clubs
   }
 })

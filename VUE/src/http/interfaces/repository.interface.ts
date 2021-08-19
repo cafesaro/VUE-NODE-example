@@ -1,8 +1,8 @@
 export interface RepositoryInterface {
-    get(id: number): Promise<any>;
-    post(data: {}): Promise<any>;
-    getAll(): Promise<any>;
-    put(id: number, data: {}): Promise<any>;
-    delete(id: number): Promise<any>;
-    deleteAll(data: {}): Promise<any>;
+    get(id: number | string, resource: string): Promise<any>;
+    post(data: {}, resource: string): Promise<any>;
+    getAll(resource: string): Promise<any>;
+    put(data: {}, resource: string): Promise<any>;
+    delete(id: number, resource: string): Promise<any>;
+    deleteAll(data: {}, resource: string): Promise<any>;
 }
