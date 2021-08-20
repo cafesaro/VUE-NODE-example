@@ -35,6 +35,20 @@ client.connect()
                 notifyChanges(data.channel, player);
             }
         });
+        client.query("listen player_insert");
+        client.on('notification', async (data) => {
+            if (data.channel === "player_insert") {
+                const player = JSON.parse(data.payload);
+                notifyChanges(data.channel, player);
+            }
+        });
+        client.query("listen club_insert");
+        client.on('notification', async (data) => {
+            if (data.channel === "club_insert") {
+                const club = JSON.parse(data.payload);
+                notifyChanges(data.channel, club);
+            }
+        });
     })
     .catch(err => {
         logger.error(`PG-DB client-listener is not connected: ${err}`);

@@ -37,7 +37,7 @@ begin
         'country', c_name_country,
         'bugdet', c_bugdet
     );
-    perform pg_notify('club_verify', v_json_resp::text);
+    perform pg_notify('club_insert', v_json_resp::text);
     return;
 end;
 $$;
@@ -103,7 +103,7 @@ begin
         'position', p_name_position,
         'club', v_name_club
     );
-    perform pg_notify('player_verify', v_json_resp::text);
+    perform pg_notify('player_insert', v_json_resp::text);
     return;
 end;
 $$;
@@ -148,7 +148,7 @@ begin
     select name_club
     into v_name_club
     from fut_tut.lnk_club
-    where id_club =c;
+    where id_club =c_id_club;
 
     if (v_id_club > 0) then
     update fut_tut.lnk_club
@@ -172,7 +172,7 @@ begin
         'position', v_name_position,
         'club', v_name_club
     );
-    perform pg_notify('club_verify', v_json_resp::text);
+    perform pg_notify('player_verify', v_json_resp::text);
     return;
 end;
 $$;
@@ -211,7 +211,6 @@ begin
     from fut_tut.ms_player_position
     where id_position = v_id_position;
 
-
     update fut_tut.lnk_player
     set id_club = null
     where id_player = p_id_player;
@@ -224,7 +223,7 @@ begin
         'position', v_name_position,
         'club', null
     );
-    perform pg_notify('club_verify', v_json_resp::text);
+    perform pg_notify('player_verify', v_json_resp::text);
     return;
 end;
 $$;

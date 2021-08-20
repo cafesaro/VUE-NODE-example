@@ -28,7 +28,6 @@ playerPGRepository.changePlayer= async (idClub, idPlayer) => {
 
 playerPGRepository.deleteTeam= async (idPlayer) => {
     logger.debug(`[${context}]: Saving club in pg`);
-    logger.debug(PGQuery.deleteTeam(idPlayer));
     await pool.query(PGQuery.setSchema());
     await pool.query(PGQuery.deleteTeam(idPlayer));
 };

@@ -65,6 +65,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import {clubs} from '../../../store/namespaces';
 import clubMethods from '../../../store/clubs/methods/clubs.methods';
 import {Club} from '../interfaces/clubs.interface';
+import { Socket } from 'vue-socket.io-extended'
 
 @Component({})
 export default class Clubs extends Vue {
@@ -76,8 +77,21 @@ export default class Clubs extends Vue {
     totalRows: number = 0;
     filter = null;
 
+    @Socket()
+      connect(){
+    }
+
     mounted(){
       this.clubAdded();        
+    }
+
+    listenerInsert(club : Club) {
+        this.clubs.push(club);
+    }
+
+    created(){ 
+      this.$socket.client.on('club_insert',this.listenerInsert)
+
     }
 
     async clubAdded(){

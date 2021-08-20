@@ -85,12 +85,19 @@ export default class Players extends Vue {
       connect(){
     }
 
-    listenVerifications(player : Player) {
+    listenerInsert(player : Player) {
         this.players.push(player);
     }
 
+    listenVerifications(player : Player) {
+        let index = this.players.findIndex(el => el.idPlayer === player.idPlayer);
+        this.players[index].club = player.club;
+    }    
+
     created(){ 
-       this.$socket.client.on('player_verify',this.listenVerifications)
+      this.$socket.client.on('player_insert',this.listenerInsert)
+      this.$socket.client.on('player_verify',this.listenVerifications)
+
     }
 
     async playerAdded(){
