@@ -53,13 +53,20 @@ create table fut_tut.lnk_player (
 
 --Views
 create or replace view fut_tut.v_lnk_player_info as (
-    select
-        pl.id_player, pl.name_player, pl.value_player,
-        pc.name_country, pp.name_position, cl.name_club
-    from fut_tut.lnk_player pl, fut_tut.lnk_club cl
-    inner join fut_tut.ms_country pc on pl.id_country = pc.id_country
-    inner join fut_tut.ms_player_position pp on pl.id_position = pp.id_position
-    where (pl.status = true) and ((cl.id_club=pl.id_club) or (pl.id_club = Null))
+    SELECT DISTINCT pl.id_player,
+        pl.name_player,
+        pl.value_player,
+        pc.name_country,
+        pp.name_position,
+            CASE
+                WHEN pl.id_club IS NULL THEN 'None'::character varying
+                ELSE cl.name_club
+            END AS name_club
+    FROM fut_tut.lnk_club cl,
+        fut_tut.lnk_player pl
+        JOIN fut_tut.ms_country pc ON pl.id_country = pc.id_country
+        JOIN fut_tut.ms_player_position pp ON pl.id_position = pp.id_position
+    WHERE pl.status = true AND (cl.id_club = pl.id_club OR pl.id_club IS NULL)
 );
 
 create or replace view fut_tut.v_lnk_club_info as (
