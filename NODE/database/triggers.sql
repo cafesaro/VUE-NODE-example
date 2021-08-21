@@ -9,7 +9,7 @@ begin
 end;
 $$;
 
-create or replace function plt_tut.tf_before_update_lnk_player()
+create or replace function fut_tut.tf_before_update_lnk_player()
 returns trigger
 language plpgsql
 as $$
